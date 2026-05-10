@@ -23,7 +23,9 @@ parameters:
     displayName: Path To Publish
     type: string
     default: 'gameoflife-web/target/gameoflife.war'
-
+  - name: authenticateMavenFeed
+    type: boolean
+    default: no
 steps:
   - task: Maven@3
     inputs:
@@ -32,7 +34,7 @@ steps:
       publishJUnitResults: true
       testResultsFiles: '**/surefire-reports/TEST-*.xml'
       jdkVersionOption: '${{ parameters.jdkVersion }}'
-
+      mavenAuthenticateFeed: "${{ parameters.authenticateMavenFeed }}"
   - task: PublishPipelineArtifact@1
     inputs:
       targetPath: '${{ parameters.pathToPublish }}'
